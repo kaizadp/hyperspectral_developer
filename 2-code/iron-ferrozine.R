@@ -399,5 +399,5 @@ process_iron_upland = function(ferrozine_map, ferrozine_data){
 data_upland = import_iron(FILEPATH = "1-data/iron-ferrozine/2024-07-22_upland")$ferrozine_data
 map_upland = import_iron(FILEPATH = "1-data/iron-ferrozine/2024-07-22_upland")$ferrozine_map
 
-processed_upland = process_iron_upland(ferrozine_map = map_upland, ferrozine_data = data_upland)
+processed_upland = process_iron_upland(ferrozine_map = map_upland, ferrozine_data = data_upland) %>% filter(!is.na(Fe_ugg))
 processed_upland %>% write.csv("1-data/processed/upland_iron.csv", row.names = F, na = "")
