@@ -8,7 +8,7 @@ ferrozine_weights = read_sheet("https://docs.google.com/spreadsheets/d/1bpRgvOgW
 import_iron = function(FILEPATH = "1-data/iron-ferrozine"){
   
   # import map
-  ferrozine_map = read_sheet("https://docs.google.com/spreadsheets/d/1bpRgvOgWwtvSYZS7CHiNt-2Ck3G5AVg4tGnq_zWsJ90/edit#gid=873884422", sheet = "iron-map") %>% janitor::clean_names()
+  ferrozine_map = read_sheet("https://docs.google.com/spreadsheets/d/1bpRgvOgWwtvSYZS7CHiNt-2Ck3G5AVg4tGnq_zWsJ90/edit#gid=873884422", sheet = "iron-map", col_types = "c") %>% janitor::clean_names()
   
   # import data files (plate reader)
   filePaths_ferrozine <- list.files(path = FILEPATH, pattern = ".xlsx", full.names = TRUE, recursive = TRUE)
@@ -54,6 +54,7 @@ process_iron = function(ferrozine_map, ferrozine_data){
            date = ymd(date),
            tray = str_extract(source, "plate[1-9][a-z]?"),
            tray = parse_number(tray, "plate"),
+           tray = as.character(tray),
            absorbance_562 = as.numeric(absorbance_562)) %>% 
     dplyr::select(date, tray, well_position, absorbance_562) %>% 
     right_join(map_processed, by = c("date", "tray", "well_position")) %>% 
